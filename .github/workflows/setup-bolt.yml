@@ -20,6 +20,8 @@ jobs:
             - destination: ifconfig.me
               action: allow
               name: Allow ifconfig.me
+            - destination: yahoo.com
+              action: block
         continue-on-error: true
       - name: Checkout
         uses: actions/checkout@v4
