@@ -1,0 +1,32 @@
+name: Bolt Network Test
+
+on: [workflow_dispatch] # Manual trigger so you can run it on demand
+
+jobs:
+  network-audit-test:
+    runs-on: ubuntu-latest
+    steps:
+      # STEP 1: Initialize Bolt in Audit Mode
+      # It sits in the background and logs all traffic without blocking.
+      - name: Setup Bolt (Audit Mode)
+        uses: koalalab-inc/bolt@v1
+        with:
+          mode: 'audit'               # 'audit' logs traffic, 'active' blocks it
+          default_policy: 'allow-all' # In audit mode, we usually allow all to see what happens
+          allow_http: 'true'          # Allow HTTP for testing (e.g., jsonip)
+
+      # STEP 2: Generate Traffic
+      # We will curl a few different domains to populate the report.
+      - name: Call Google (Should be allowed)
+        run: curl -I https://www.google.com
+
+      - name: Call GitHub API (Should be allowed)
+        run: curl -I https://api.github.com
+
+      - name: Call JSONIP (External Service)
+        run: curl -I https://jsonip.com
+        
+      # STEP 3: Simulate a "Malicious" or Unwanted Call
+      # In audit mode, this will succeed, but show up in the logs.
+      - name: Call Unwanted Domain
+        run: curl -I https://www.bing.com
