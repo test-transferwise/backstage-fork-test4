@@ -11,8 +11,8 @@ jobs:
       - name: Setup Bolt (Audit Mode)
         uses: koalalab-inc/bolt@v1
         with:
-          mode: 'audit'               # 'audit' logs traffic, 'active' blocks it
-          default_policy: 'allow-all' # In audit mode, we usually allow all to see what happens
+          mode: 'active'               # 'audit' logs traffic, 'active' blocks it
+          default_policy: 'block-all' # In audit mode, we usually allow all to see what happens
           allow_http: 'true'          # Allow HTTP for testing (e.g., jsonip)
 
       # STEP 2: Generate Traffic
