@@ -13,8 +13,6 @@ jobs:
       - name: Bolt
         uses: koalalab-inc/bolt@v1.3.0
         with:
-          trusted_github_accounts: |
-            - akto-api-security
           egress_rules: |
             - destination: google.com
               action: block
@@ -30,18 +28,4 @@ jobs:
         continue-on-error: true
       - name: Curl Allowed Domain
         run: curl https://ifconfig.me
-        continue-on-error: true
-      - name: Curl Some other Github Account API
-        run: |
-          curl -L \
-          -H "Accept: application/vnd.github+json" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/orgs/akto-api-security/repos
-        continue-on-error: true
-      - name: Curl Some other Github Account
-        run: |
-          curl -L \
-          -H "Accept: application/vnd.github+json" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/orgs/razorpay/repos
         continue-on-error: true
